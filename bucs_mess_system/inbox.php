@@ -8,9 +8,13 @@ $uid = $me['id_no'];
 $unread = (int)$db->query("SELECT COUNT(*) c FROM messages WHERE receiver='$uid' AND status='sent'")->fetch_assoc()['c'];
 
 $filter = sanitize($db, $_GET['filter'] ?? 'all');
+$search = sanitize($db, $_GET['search'] ?? '');
 $where  = "m.receiver='$uid'";
 if ($filter === 'unread') $where .= " AND m.status='sent'";
 if ($filter === 'read')   $where .= " AND m.status='read'";
+if ($search !== '') {
+    $where .= " AND (CONCAT(u.fname, ' ', u.lname) LIKE '%$search%' OR m.message LIKE '%$search%')";
+}
 
 $msgs = $db->query("
     SELECT m.*, u.fname, u.lname
@@ -30,11 +34,17 @@ include 'includes/navbar.php';
     <a href="compose.php" class="btn btn-primary"><i class="fa fa-pen-to-square"></i> Compose</a>
   </div>
 
+  <form action="" method="get" class="search-row">
+    <input type="hidden" name="filter" value="<?= htmlspecialchars($filter) ?>">
+    <input type="search" name="search" class="form-control" placeholder="Search sender or message..." value="<?= htmlspecialchars($search) ?>">
+    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+  </form>
+
   <!-- Filter tabs -->
   <div class="filter-tabs">
-    <a href="?filter=all"    class="filter-tab <?= $filter==='all'   ?'active':'' ?>">All</a>
-    <a href="?filter=unread" class="filter-tab <?= $filter==='unread'?'active':'' ?>">Unread</a>
-    <a href="?filter=read"   class="filter-tab <?= $filter==='read'  ?'active':'' ?>">Read</a>
+    <a href="?filter=all<?= $search ? '&search='.urlencode($search) : '' ?>"    class="filter-tab <?= $filter==='all'   ?'active':'' ?>">All</a>
+    <a href="?filter=unread<?= $search ? '&search='.urlencode($search) : '' ?>" class="filter-tab <?= $filter==='unread'?'active':'' ?>">Unread</a>
+    <a href="?filter=read<?= $search ? '&search='.urlencode($search) : '' ?>"   class="filter-tab <?= $filter==='read'  ?'active':'' ?>">Read</a>
   </div>
 
   <div class="card">
