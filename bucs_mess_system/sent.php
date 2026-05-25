@@ -7,10 +7,16 @@ $uid = $me['id_no'];
 
 $unread = (int)$db->query("SELECT COUNT(*) c FROM messages WHERE receiver='$uid' AND status='sent'")->fetch_assoc()['c'];
 
+$search = sanitize($db, $_GET['search'] ?? '');
+$where  = "m.sender_id='$uid'";
+if ($search !== '') {
+    $where .= " AND (CONCAT(u.fname, ' ', u.lname) LIKE '%$search%' OR m.message LIKE '%$search%')";
+}
+
 $msgs = $db->query("
     SELECT m.*, u.fname, u.lname
     FROM messages m JOIN users u ON m.receiver = u.id_no
-    WHERE m.sender_id='$uid'
+    WHERE $where
     ORDER BY m.sent_at DESC");
 
 $db->close();
@@ -25,6 +31,11 @@ include 'includes/navbar.php';
     <h1 class="page-title"><i class="fa fa-paper-plane"></i> Sent Messages</h1>
     <a href="compose.php" class="btn btn-primary"><i class="fa fa-pen-to-square"></i> Compose</a>
   </div>
+
+  <form action="" method="get" class="search-row">
+    <input type="search" name="search" class="form-control" placeholder="Search recipient or message..." value="<?= htmlspecialchars($search) ?>">
+    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+  </form>
 
   <div class="card">
     <?php if ($msgs->num_rows === 0): ?>
