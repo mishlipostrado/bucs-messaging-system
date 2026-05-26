@@ -129,13 +129,23 @@ if (isset($_POST['login'])) {
                 </div>
             </div>
 
-            <button type="submit" name="login">
+	<div class="button-group">
 
-                <i class="fa fa-right-to-bracket"></i>
+    		<button type="submit" name="signup">
 
-                Login
+        		<i class="fa fa-user-plus"></i>
+        		Sign Up
 
-            </button>
+    		</button>
+
+    		<button type="reset" class="reset-btn">
+
+        		<i class="fa fa-rotate-left"></i>
+        		Reset
+
+    		</button>
+
+	</div>
 
         </form>
 

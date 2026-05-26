@@ -13,26 +13,36 @@ if (isset($_POST['signup'])) {
     $lname = sanitize($db, $_POST['lname']);
     $uname = sanitize($db, $_POST['uname']);
 
-    $pwd = md5($_POST['password']);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
-    $sql = "INSERT INTO users
-            (id_no, fname, mname, lname, uname, pwd)
-            VALUES
-            ('$id_no','$fname','$mname','$lname','$uname','$pwd')";
+    if ($password != $confirm_password) {
 
-    if ($db->query($sql)) {
-
-        $message = "Signup successful!";
+        $message = "Passwords do not match!";
 
     } else {
 
-        $message = "Error: " . $db->error;
+        $pwd = md5($password);
+
+        $sql = "INSERT INTO users
+                (id_no, fname, mname, lname, uname, pwd)
+                VALUES
+                ('$id_no','$fname','$mname','$lname','$uname','$pwd')";
+
+        if ($db->query($sql)) {
+
+            header("Location: dashboard.php");
+            exit();
+
+        } else {
+
+            $message = "Error: " . $db->error;
+        }
     }
 
     $db->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -56,7 +66,6 @@ if (isset($_POST['signup'])) {
 
 <div class="container">
 
-    <!-- LEFT -->
     <div class="left-panel">
 
         <img src="assets/pictures/icon.png"
@@ -68,7 +77,6 @@ if (isset($_POST['signup'])) {
 
     </div>
 
-    <!-- RIGHT -->
     <div class="right-panel">
 
         <h2>
@@ -162,33 +170,58 @@ if (isset($_POST['signup'])) {
 
             <div class="input-group">
 
-                <label>Password</label>
+    		<label>Password</label>
 
-                <div class="input-icon-wrap password-container">
+   		<div class="input-icon-wrap password-container">
 
-                    <i class="fa fa-lock input-icon"></i>
+       			<i class="fa fa-lock input-icon"></i>
 
-                    <input type="password"
-              		name="password"
-               		id="password"
-               		placeholder="Enter Password"
-              		required>
+       			<input type="password"
+              			name="password"
+              			id="password"
+              			placeholder="Enter Password"
+              			required>
 
-                    <span id="showPassword">
-                        👁️
-                    </span>
+        		 <span id="showPassword">👁️</span>
 
-                </div>
-            </div>
+    		</div>
+	    </div>
 
-            <button type="submit" name="signup">
+	    <div class="input-group">
 
-                <i class="fa fa-user-plus"></i>
+    		<label>Confirm Password</label>
 
-                Sign Up
+    		<div class="input-icon-wrap password-container">
 
-            </button>
+        		<i class="fa fa-lock input-icon"></i>
 
+        		<input type="password"
+               			name="confirm_password"
+               			id="confirm_password"
+               			placeholder="Confirm Password"
+               			required>
+			<span id="showPassword">👁️</span>
+
+    		</div>
+	     </div>
+
+	<div class="button-group">
+
+    		<button type="submit" name="signup">
+
+        		<i class="fa fa-user-plus"></i>
+        		Sign Up
+
+    		</button>
+
+    		<button type="reset" class="reset-btn">
+
+        		<i class="fa fa-rotate-left"></i>
+        		Reset
+
+    		</button>
+
+	</div>
         </form>
 
         <p>

@@ -1,4 +1,3 @@
-/* ───────── RESET ───────── */
 *,
 *::before,
 *::after{
@@ -7,7 +6,6 @@
     box-sizing:border-box;
 }
 
-/* ───────── ROOT COLORS ───────── */
 :root{
 
     --navy:#0b1f4d;
@@ -37,7 +35,6 @@
     --nav-h:62px;
 }
 
-/* ───────── BODY ───────── */
 
 html{
     scroll-behavior:smooth;
@@ -50,7 +47,6 @@ body{
     min-height:100vh;
 }
 
-/* ───────── AUTH PAGE ───────── */
 
 .auth-body,
 body{
@@ -79,7 +75,6 @@ body::before{
     backdrop-filter:blur(2px);
 }
 
-/* ───────── CONTAINER ───────── */
 
 .container{
     width:780px;
@@ -94,7 +89,6 @@ body::before{
     animation:fadeUp .8s ease;
 }
 
-/* ───────── LEFT PANEL ───────── */
 
 .left-panel{
     width:40%;
@@ -133,7 +127,6 @@ body::before{
     opacity:.95;
 }
 
-/* ───────── RIGHT PANEL ───────── */
 
 .right-panel{
     width:60%;
@@ -157,7 +150,6 @@ body::before{
     color:var(--blue2);
 }
 
-/* ───────── FORM ───────── */
 
 form{
     width:100%;
@@ -183,7 +175,6 @@ form{
     position:relative;
 }
 
-/* left icons */
 
 .password-container i.fa-lock,
 .password-container i.fa-user,
@@ -197,9 +188,6 @@ form{
     font-size:14px;
 }
 
-/* inputs */
-
-/* ───────── INPUT ICONS ───────── */
 
 .input-icon-wrap{
     position:relative;
@@ -217,7 +205,6 @@ form{
     pointer-events:none;
 }
 
-/* input */
 .input-group input{
     width:100%;
     height:48px;
@@ -231,14 +218,12 @@ form{
     transition:.25s;
 }
 
-/* focus */
 .input-group input:focus{
     border-color:var(--blue2);
     background:#fff;
     box-shadow:0 0 0 4px rgba(86,150,252,.12);
 }
 
-/* password eye */
 #showPassword{
     position:absolute;
     right:14px;
@@ -248,7 +233,7 @@ form{
     font-size:18px;
     color:var(--muted);
     user-select:none;
-}/* eye button */
+}
 
 #showPassword{
     position:absolute;
@@ -263,7 +248,6 @@ form{
     user-select:none;
 }
 
-/* ───────── BUTTON ───────── */
 
 button{
     width:100%;
@@ -303,7 +287,26 @@ button:hover{
     );
 }
 
-/* ───────── LINKS ───────── */
+.button-group{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.reset-btn{
+    background:#999;
+    padding:10px 15px;
+    font-size:14px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    color:white;
+}
+
+.reset-btn:hover{
+    background:#777;
+}
+
 
 a{
     color:var(--blue);
@@ -315,7 +318,6 @@ a:hover{
     color:var(--navy);
 }
 
-/* ───────── MESSAGE ───────── */
 
 #message{
     margin-bottom:18px;
@@ -335,15 +337,11 @@ a:hover{
     border:1px solid #d9e8ff;
 }
 
-/* ───────── PARAGRAPH ───────── */
-
 p{
     margin-top:18px;
     text-align:center;
     font-size:14px;
 }
-
-/* ───────── NAVBAR ───────── */
 
 .topnav{
     height:var(--nav-h);
